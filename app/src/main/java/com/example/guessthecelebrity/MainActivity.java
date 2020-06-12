@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         //runs bg thread 1
         try {
             result = task.execute(url).get(); //in GBooks, everything was handled in extractFeatureFromJson() and didn't need to return anything, hence the code was task.execute(url);
-            names = extractInfo(result, "<img alt=\"(.*?)\"");
-            images = extractInfo(result, "src=\"(.*?)\"");
+            names = extractInfo(result, "<img alt=\"(.*?)\""); //STORES ALL NAMES IN AN ARRAY
+            images = extractInfo(result, "src=\"(.*?)\""); //STORES ALL IMGS FOR THE CORRESPONDING NAME IN AN ARRAY
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    //TO GET HTML CODE FROM WEB URL AS A STRING!
     private class DownloadTask extends AsyncTask<String, Void, String> {
 
         @Override
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    //TO SET IMGS FROM THE URLS IN THE images ARRAY LIST!
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
@@ -93,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public ArrayList<String> extractInfo(String html, String splitBetween) {
         ArrayList<String> list = new ArrayList<String>();
         Pattern p = Pattern.compile(splitBetween);
@@ -102,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return list;
     }
+
 
     public void generateQuiz() {
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
@@ -150,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public void clickAnswer(View view) {
         Button clickedButton = (Button) view;
         String expectedPosition = Integer.toString(randomTag);
@@ -163,5 +170,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Wrong - try again", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 }
